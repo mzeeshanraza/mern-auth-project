@@ -1,45 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
-    <div>
-        <nav className="h-[70px] relative w-full px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-30 bg-gradient-to-r from-indigo-700 to-violet-500 transition-all">
-        
-        <Link to='/'>
-            Auth App
+    <div className="bg-slate-200">
+      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+        <Link to="/">
+          <h1 className="font-bold">Auth App</h1>
         </Link>
-    
-        <ul className="text-white md:flex hidden items-center gap-10">
-            <li><Link to='/' className="hover:text-white/70 transition" >Home</Link></li>
-            <li><Link to='/about' className="hover:text-white/70 transition" >About</Link></li>
-            <li><Link to='/sign-in' className="hover:text-white/70 transition" >Sign In</Link></li>
+        <ul className="flex gap-4">
+          <Link to="/">
+            <li>Home</li>
+          </Link>
+          <Link to="/about">
+            <li>About</li>
+          </Link>
+          <Link to="/profile">
+            {currentUser ? (
+              <img
+                src={currentUser.profilePicture}
+                alt="profile"
+                className="h-7 w-7 rounded-full object-cover"
+              />
+            ) : (
+              <li>Sign In</li>
+            )}
+          </Link>
         </ul>
-    
-        <button type="button" className="bg-white text-gray-700 md:inline hidden text-sm hover:opacity-90 active:scale-95 transition-all w-40 h-11 rounded-full">
-            Get started
-        </button>
-    
-        <button aria-label="menu-btn" type="button" className="menu-btn inline-block md:hidden active:scale-90 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="#fff">
-                <path d="M3 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2z"/>
-            </svg>
-        </button>
-    
-        <div className="mobile-menu absolute top-[70px] left-0 w-full bg-gradient-to-r from-indigo-700 to-violet-500 p-6 hidden md:hidden">
-            <ul className="flex flex-col space-y-4 text-white text-lg">
-                <li><a href="#" className="text-sm">Home</a></li>
-                <li><a href="#" className="text-sm">Services</a></li>
-                <li><a href="#" className="text-sm">Portfolio</a></li>
-                <li><a href="#" className="text-sm">Pricing</a></li>
-            </ul>
-            <button type="button" className="bg-white text-gray-700 mt-6 inline md:hidden text-sm hover:opacity-90 active:scale-95 transition-all w-40 h-11 rounded-full">
-                Get started
-            </button>
-        </div>
-    </nav>
-    
-   
+      </div>
     </div>
-  )
-}
+  );
+};
